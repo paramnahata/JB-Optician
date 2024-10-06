@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            /* Light background for better contrast */
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .product-details {
+            width: 70%;
+            /* Left column */
+        }
+
+        .related-products {
+            width: 28%;
+            /* Right column */
+            padding: 10px;
+            border-left: 1px solid #ddd;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            transition: box-shadow 0.3s;
+            /* Smooth transition for hover effect */
+        }
+
+        .product-item:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .product-item img {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 5px;
+            /* Rounded corners for product images */
+        }
+
+        .product-item h4 {
+            margin: 0;
+        }
+
+        .related-products-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .quantity-controls {
+            margin: 20px 0;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .product-details,
+            .related-products {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Product Details Section -->
+        <div class="product-details">
+            <h2 id="product-name"></h2>
+            <img id="product-image" src="" alt="Product Image" class="img-fluid">
+            <p id="product-description"></p>
+            <p id="product-price" class="font-weight-bold"></p>
+
+            <!-- Quantity Controls -->
+            <div class="quantity-controls">
+                <button class="btn btn-secondary" onclick="decreaseQuantity('quantity-3')">-</button>
+                <input type="number" id="quantity-3" value="1" min="1" style="width: 60px; text-align: center;">
+                <button class="btn btn-secondary" onclick="increaseQuantity('quantity-3')">+</button>
+            </div>
+
+            <button class="btn btn-primary">Add to Cart</button>
+            <a href="checkout.html" class="btn btn-success">Buy Now</a>
+
+            <!-- Product 360 View -->
+            <div id="product-360-view" class="product-360-view" style="display: none;">
+                <button onclick="close360View()" class="close-btn">&times;</button>
+                <iframe src="https://example.com/360-view" frameborder="0" style="width: 100%; height: 400px;"></iframe>
+            </div>
+
+            <!-- VR Try-On -->
+            <div id="product-vr-tryon" class="product-vr-tryon" style="display: none;">
+                <button onclick="closeVRTryOn()" class="close-btn">&times;</button>
+                <iframe src="https://example.com/vr-tryon" frameborder="0" style="width: 100%; height: 400px;"></iframe>
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="related-products">
+            <div class="related-products-title">Related Products</div>
+            <div id="related-products-list"></div>
+            <button id="show-all-products" class="btn btn-info" onclick="toggleProducts()">Show All Products</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+        { id: 1, name: "Classic round frames for a timeless look.", price: 99, image: "https://picsum.photos/800/400?random=1", description: "These classic round frames offer a timeless style, perfect for both casual and formal occasions. Crafted for comfort and durability, they add a touch of sophistication to any look." },
+{ id: 2, name: "Stylish aviators with a sleek metal finish.", price: 89, image: "https://picsum.photos/800/400?random=2", description: "Sleek and stylish, these aviators feature a metal finish that elevates your everyday style. Ideal for those seeking a bold, contemporary appearance." },
+{ id: 3, name: "Lightweight rimless glasses for all-day comfort.", price: 120, image: "https://picsum.photos/800/400?random=3", description: "Designed for all-day comfort, these lightweight rimless glasses provide a barely-there feel without compromising on style. Perfect for a minimalist, modern look." },
+{ id: 4, name: "Trendy square frames with bold edges.", price: 110, image: "https://picsum.photos/800/400?random=4", description: "Make a statement with trendy square frames that boast bold edges and a contemporary design. These glasses are perfect for a fashionable, confident look." },
+{ id: 5, name: "Elegant cat-eye glasses for a chic touch.", price: 95, image: "https://picsum.photos/800/400?random=5", description: "Add a touch of elegance with these chic cat-eye glasses. Their sophisticated design enhances your style while offering comfort and durability." },
+{ id: 6, name: "Durable sports frames for active lifestyles.", price: 105, image: "https://picsum.photos/800/400?random=6", description: "Built for an active lifestyle, these durable sports frames are lightweight and designed to stay secure, making them perfect for outdoor activities and high-energy pursuits." },
+{ id: 7, name: "Vintage-inspired oval glasses with modern flair.", price: 85, image: "https://picsum.photos/800/400?random=7", description: "A perfect blend of vintage and modern, these oval glasses offer a retro-inspired design with a contemporary twist, ideal for those who love a unique look." },
+{ id: 8, name: "Sleek half-rim glasses for a minimalist style.", price: 99, image: "https://picsum.photos/800/400?random=8", description: "These sleek half-rim glasses deliver minimalist style with a modern edge. Perfect for those who prefer subtle yet sophisticated eyewear." },
+{ id: 9, name: "Bold acetate frames in a variety of colors.", price: 115, image: "https://picsum.photos/800/400?random=9", description: "Bold and versatile, these acetate frames come in a variety of colors, allowing you to express your unique style with confidence." },
+{ id: 10, name: "Retro round glasses with a modern twist.", price: 119, image: "https://picsum.photos/800/400?random=10", description: "Embrace a retro vibe with these round glasses, featuring a modern twist for a fresh, stylish appearance. Ideal for those looking for a trendy, vintage-inspired look." },
+{ id: 11, name: "Stylish aviators with a sleek metal finish.", price: 89, image: "https://picsum.photos/800/400?random=11", description: "Sleek and stylish, these aviators feature a metal finish that elevates your everyday style. Ideal for those seeking a bold, contemporary appearance." },
+{ id: 12, name: "Lightweight rimless glasses for all-day comfort.", price: 95, image: "https://picsum.photos/800/400?random=12", description: "Designed for all-day comfort, these lightweight rimless glasses provide a barely-there feel without compromising on style. Perfect for a minimalist, modern look." },
+{ id: 13, name: "Vintage-inspired oval glasses with modern flair.", price: 105, image: "https://picsum.photos/800/400?random=13", description: "A perfect blend of vintage and modern, these oval glasses offer a retro-inspired design with a contemporary twist, ideal for those who love a unique look." },
+{ id: 14, name: "Elegant cat-eye glasses for a chic touch.", price: 95, image: "https://picsum.photos/800/400?random=14", description: "Add a touch of elegance with these chic cat-eye glasses. Their sophisticated design enhances your style while offering comfort and durability." },
+{ id: 15, name: "Bold acetate frames in a variety of colors.", price: 100, image: "https://picsum.photos/800/400?random=15", description: "Bold and versatile, these acetate frames come in a variety of colors, allowing you to express your unique style with confidence." },
+{ id: 16, name: "Trendy square frames with bold edges.", price: 120, image: "https://picsum.photos/800/400?random=16", description: "Make a statement with trendy square frames that boast bold edges and a contemporary design. These glasses are perfect for a fashionable, confident look." },
+{ id: 17, name: "Sleek half-rim glasses for a minimalist style.", price: 110, image: "https://picsum.photos/800/400?random=17", description: "These sleek half-rim glasses deliver minimalist style with a modern edge. Perfect for those who prefer subtle yet sophisticated eyewear." },
+{ id: 18, name: "Retro round glasses with a modern twist.", price: 130, image: "https://picsum.photos/800/400?random=18", description: "Embrace a retro vibe with these round glasses, featuring a modern twist for a fresh, stylish appearance. Ideal for those looking for a trendy, vintage-inspired look." },
+{ id: 19, name: "Durable sports frames for active lifestyles.", price: 125, image: "https://picsum.photos/800/400?random=19", description: "Built for an active lifestyle, these durable sports frames are lightweight and designed to stay secure, making them perfect for outdoor activities and high-energy pursuits." },
+{ id: 20, name: "Elegant cat-eye glasses for a chic touch.", price: 95, image: "https://picsum.photos/800/400?random=20", description: "Add a touch of elegance with these chic cat-eye glasses. Their sophisticated design enhances your style while offering comfort and durability." },
+{ id: 21, name: "Classic round frames for a timeless look.", price: 105, image: "https://picsum.photos/800/400?random=21", description: "These classic round frames offer a timeless style, perfect for both casual and formal occasions. Crafted for comfort and durability, they add a touch of sophistication to any look." },
+{ id: 22, name: "Bold acetate frames in a variety of colors.", price: 125, image: "https://picsum.photos/800/400?random=22", description: "Bold and versatile, these acetate frames come in a variety of colors, allowing you to express your unique style with confidence." },
+{ id: 23, name: "Sleek half-rim glasses for a minimalist style.", price: 99, image: "https://picsum.photos/800/400?random=23", description: "These sleek half-rim glasses deliver minimalist style with a modern edge. Perfect for those who prefer subtle yet sophisticated eyewear." },
+{ id: 24, name: "Lightweight rimless glasses for all-day comfort.", price: 115, image: "https://picsum.photos/800/400?random=24", description: "Designed for all-day comfort, these lightweight rimless glasses provide a barely-there feel without compromising on style. Perfect for a minimalist, modern look." },
+{ id: 25, name: "Durable sports frames for active lifestyles.", price: 105, image: "https://picsum.photos/800/400?random=25", description: "Built for an active lifestyle, these durable sports frames are lightweight and designed to stay secure, making them perfect for outdoor activities and high-energy pursuits." },
+{ id: 26, name: "Stylish aviators with a sleek metal finish.", price: 135, image: "https://picsum.photos/800/400?random=26", description: "Sleek and stylish, these aviators feature a metal finish that elevates your everyday style. Ideal for those seeking a bold, contemporary appearance." },
+{ id: 27, name: "Trendy square frames with bold edges.", price: 120, image: "https://picsum.photos/800/400?random=27", description: "Make a statement with trendy square frames that boast bold edges and a contemporary design. These glasses are perfect for a fashionable, confident look." },
+{ id: 28, name: "Classic round frames for a timeless look.", price: 109, image: "https://picsum.photos/800/400?random=28", description: "These classic round frames offer a timeless style, perfect for both casual and formal occasions. Crafted for comfort and durability, they add a touch of sophistication to any look." },
+{ id: 29, name: "Vintage-inspired oval glasses with modern flair.", price: 95, image: "https://picsum.photos/800/400?random=29", description: "A perfect blend of vintage and modern, these oval glasses offer a retro-inspired design with a contemporary twist, ideal for those who love a unique look." },
+{ id: 30, name: "Retro round glasses with a modern twist.", price: 115, image: "https://picsum.photos/800/400?random=30", description: "Embrace a retro vibe with these round glasses, featuring a modern twist for a fresh, stylish appearance. Ideal for those looking for a trendy, vintage-inspired look." },
+            // Add more products here...
+        ];
+
+        // Get product ID from URL query
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        // Find the selected product
+        const product = products.find(p => p.id === productId);
+
+        // Display product details
+        document.getElementById("product-name").textContent = product.name;
+        document.getElementById("product-image").src = product.image;
+        document.getElementById("product-description").textContent = product.description;
+        document.getElementById("product-price").textContent = `Price: $${product.price}`;
+
+        // Function to display related products (excluding the current product)
+        function displayRelatedProducts() {
+            const relatedProducts = products.filter(p => p.id !== productId);
+            const relatedProductsList = document.getElementById("related-products-list");
+
+            relatedProducts.forEach(p => {
+                const productItem = document.createElement("div");
+                productItem.className = "product-item";
+                productItem.innerHTML = `
+                    <img src="${p.image}" alt="${p.name}">
+                    <div>
+                        <h4>${p.name}</h4>
+                        <p>Price: $${p.price}</p>
+                    </div>
+                `;
+                productItem.onclick = () => {
+                    window.location.href = `product-details.html?id=${p.id}`;
+                };
+                relatedProductsList.appendChild(productItem);
+            });
+        }
+
+        // Initial call to display related products
+        displayRelatedProducts();
+
+        function increaseQuantity(id) {
+            var quantity = document.getElementById(id);
+            quantity.value = parseInt(quantity.value) + 1;
+        }
+
+        function decreaseQuantity(id) {
+            var quantity = document.getElementById(id);
+            if (parseInt(quantity.value) > 1) {
+                quantity.value = parseInt(quantity.value) - 1;
+            }
+        }
+
+        function show360View() {
+            document.getElementById('product-360-view').style.display = 'block';
+        }
+
+        function close360View() {
+            document.getElementById('product-360-view').style.display = 'none';
+        }
+
+        function showVRTryOn() {
+            document.getElementById('product-vr-tryon').style.display = 'block';
+        }
+
+        function closeVRTryOn() {
+            document.getElementById('product-vr-tryon').style.display = 'none';
+        }
+    </script>
+ <script>
+    // Your existing JavaScript code...
+
+    // Function to toggle the display of all products
+    function toggleProducts() {
+        const productList = document.getElementById("all-products-list");
+        if (productList.style.display === "none" || productList.style.display === "") {
+            productList.style.display = "block"; // Show products
+        } else {
+            productList.style.display = "none"; // Hide products
+        }
+    }
+
+    // Function to display all products
+    function displayAllProducts() {
+        const allProductsContainer = document.getElementById("all-products");
+        products.forEach(p => {
+            const productItem = document.createElement("div");
+            productItem.className = "product-item";
+            productItem.innerHTML = `
+                <img src="${p.image}" alt="${p.name}">
+                <div>
+                    <h4>${p.name}</h4>
+                    <p>Price: $${p.price}</p>
+                </div>
+            `;
+            productItem.onclick = () => {
+                window.location.href = `product.html?id=${p.id}`; // Click to go to the product details
+            };
+            allProductsContainer.appendChild(productItem);
+        });
+    }
+
+    // Call this function to populate the products initially
+    displayAllProducts();
+</script>
+
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Opticals</title>
+    <link rel="icon" type="image/x-icon" href="favicon-16x16.png">
+    <link rel="stylesheet" href="stylescontact.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon" onclick="openMenu()">☰</div>
+        <!-- Logo and Website Name -->
+        <div class="brand-container">
+            <a class="navbar-brand" href="index.html">
+                <img src="logo.png" alt="Logo">
+            </a>
+            <div class="website-name">JB Opticals</div>
+        </div>
+        <!-- Profile Drop-down Menu -->
+        <div class="profile">
+            <img id="profilePic" class="profile-icon"
+                style="border-radius: 50%; width: 40px; height: 40px; cursor:pointer;" onclick="toggleDropdown()">
+            <ul class="dropdown-menu" id="profileDropdown">
+                <li onclick="window.location.href='settings.html'">Settings</li>
+                <li onclick="window.location.href='Login/Sign Up.html'">Login / Sign Up</li>
+                <li>Logout</li>
+            </ul>
+        </div>
+    </header>
+    <!-- Side Menu -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="product.html">Shop</a>
+        <a href="Q&A.html">Help Center</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <!-- Contact Us Page Content -->
+    <div class="container mt-4">
+        <h1>Contact Us</h1>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="success-message">Your message has been sent successfully!</div>
+
+        <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST"
+            onsubmit="return handleSubmit(event)">
+            <!-- Replace with your Web3Forms access key -->
+            <input type="hidden" name="access_key" value="ec1d1853-56a5-4bec-9382-f0b7393487cc">
+
+            <!-- Name Field -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                <small class="form-text text-danger" id="nameError" style="display:none;">Please enter a valid name
+                    (only alphabets).</small>
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                <small class="form-text text-danger" id="emailError" style="display:none;">Please enter a valid email
+                    address.</small>
+            </div>
+
+            <!-- Message Field -->
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Your Message"
+                    required></textarea>
+                <small class="form-text text-danger" id="messageError" style="display:none;">Message must be at least 10
+                    characters long.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </form>
+    </div>
+
+    <!-- Contact Us on WhatsApp -->
+    <a href="https://wa.me/yourwhatsappnumber" class="contact-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>
+            <a href="https://www.instagram.com" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+            <p>All rights reserved &copy; 2024 JB Optician <a href="privacy policy.html">Privacy policy</a></li>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation for Mobile -->
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="product.html">Shop</a></li>
+            <li class="nav-item"><a class="nav-link" href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
+        </ul>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>
+        // Function to handle form submission and prevent redirection
+        function handleSubmit(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Validate the form
+            if (!validateForm()) {
+                return false;
+            }
+
+            // Use the Fetch API to submit the form to Web3Forms without redirection
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success message
+                        document.getElementById('successMessage').style.display = 'block';
+
+                        // Clear the form fields
+                        form.reset();
+                    } else {
+                        alert('An error occurred. Please try again later.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('There was an error sending your message. Please try again later.');
+                });
+
+            return false;
+        }
+
+        // Function to validate form inputs
+        function validateForm() {
+            // Regex patterns
+            const namePattern = /^[a-zA-Z\s]+$/;
+            const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Validate Name
+            if (!namePattern.test(name)) {
+                document.getElementById('nameError').style.display = 'block';
+                return false;
+            } else {
+                document.getElementById('nameError').style.display = 'none';
+            }
+
+            // Validate Email
+            if (!emailPattern.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                return false;
+            } else {
+                document.getElementById('emailError').style.display = 'none';
+            }
+
+            // Validate Message length
+            if (message.length < 10) {
+                document.getElementById('messageError').style.display = 'block';
+                return false;
+            } else {
+                document.getElementById('messageError').style.display = 'none';
+            }
+
+            return true;  // Form is valid
+        }
+    </script>
+</body>
+
+</html>

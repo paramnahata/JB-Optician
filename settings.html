@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Settings</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Header */
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .logo {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header .logo a {
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative; /* For dropdown positioning */
+            margin-right: 15px; /* Adjust spacing from right */
+        }
+
+        .profile-icon {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            color: black;
+            min-width: 150px;
+            z-index: 1000;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu li {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Navigation Bar */
+        .navigation {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: none;
+        }
+
+        .navigation ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .navigation ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #uploadedImage {
+            max-width: 100%;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            border: none;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #4cae4c;
+        }
+
+        .progress {
+            display: none;
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+        }
+
+        .message {
+            color: #d9534f;
+            margin-top: 10px;
+        }
+        /* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    margin-top: 20px;
+}
+
+.footer .social-icon {
+    margin: 0 10px;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .product-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .products h2,
+    .we-also-sell h2 {
+        font-size: 28px;
+    }
+
+    .product-item {
+        width: 90%;
+    }
+
+    .round-icons {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">JB Opticals</a>
+        </div>
+        <!-- Profile Drop-down Menu -->
+        <div class="profile" onclick="toggleDropdown()">
+            <img id="profilePic" class="profile-icon" src="default-profile.png" alt="Profile" />
+            <ul class="dropdown-menu" id="profileDropdown">
+                <li onclick="window.location.href='settings.html'">Settings</li>
+                <li onclick="window.location.href='Login/Sign Up.html'">Login / Sign Up</li>
+                <li>Logout</li>
+            </ul>
+        </div>
+    </header>
+
+    <h1>Profile Photo Settings</h1>
+    <input type="file" id="uploadPhoto" accept="image/*" />
+    <button class="btn hidden" id="uploadButton">Upload Photo</button>
+    <button class="btn hidden" id="removeButton">Remove Photo</button>
+    <img id="uploadedImage" src="" alt="Uploaded Image">
+    <div class="progress" id="uploadProgress">
+        <div class="progress-bar" id="progressBar">0%</div>
+    </div>
+    <div class="message" id="message"></div>
+ <!-- Footer -->
+ <footer class="footer">
+    <div>
+        <a href="https://www.instagram.com" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+        <p>All rights reserved &copy; 2024 JB Optician <a href="privacy policy.html">Privacy policy</a></li>
+        </p>
+    </div>
+</footer>
+
+<!-- Bottom Navigation for Mobile -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+    <script>
+        const uploadPhoto = document.getElementById('uploadPhoto');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const uploadButton = document.getElementById('uploadButton');
+        const removeButton = document.getElementById('removeButton');
+        const progressBar = document.getElementById('progressBar');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const message = document.getElementById('message');
+
+        // Load profile photo from cookie
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
+        function updateProfilePicture() {
+            const storedPhoto = getCookie('profilePhoto');
+            if (storedPhoto) {
+                uploadedImage.src = storedPhoto;
+                uploadedImage.style.display = 'block';
+                uploadButton.classList.remove('hidden');
+                removeButton.classList.remove('hidden');
+                profilePic.src = storedPhoto; // Update profile icon
+            } else {
+                uploadedImage.style.display = 'none';
+                uploadButton.classList.add('hidden');
+                removeButton.classList.add('hidden');
+                profilePic.src = 'default-profile.png'; // Reset to default
+            }
+        }
+
+        uploadPhoto.addEventListener('change', function (event) {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedImage.src = e.target.result;
+                    uploadedImage.style.display = 'block';
+                    uploadButton.classList.remove('hidden');
+                    removeButton.classList.remove('hidden');
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        });
+
+        uploadButton.addEventListener('click', function () {
+            uploadProgress.style.display = 'block';
+            let width = 0;
+
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    message.textContent = "Photo uploaded successfully!";
+                    setCookie('profilePhoto', uploadedImage.src, 30);
+                    updateProfilePicture();
+                    uploadProgress.style.display = 'none';
+                } else {
+                    width++;
+                    progressBar.style.width = width + '%';
+                    progressBar.textContent = width + '%';
+                }
+            }, 30); // Simulate upload time
+        });
+
+        removeButton.addEventListener('click', function () {
+            removeCookie('profilePhoto');
+            uploadedImage.style.display = 'none';
+            uploadButton.classList.add('hidden');
+            removeButton.classList.add('hidden');
+            message.textContent = "Photo removed successfully!";
+            updateProfilePicture();
+        });
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function removeCookie(cname) {
+            document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+
+        // Load the profile picture on page load
+        window.onload = updateProfilePicture;
+
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Close dropdown when clicking outside
+        window.onclick = function (event) {
+            if (!event.target.matches('.profile-icon')) {
+                const dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    dropdowns[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

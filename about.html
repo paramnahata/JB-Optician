@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JB Optician - About Us</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .navbar-brand img {
+            width: 100px;
+        }
+        .about-content {
+            margin-top: 20px;
+        }
+        .contact-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .contact-btn i {
+            margin: 0;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer .social-icon {
+            margin: 0 10px;
+            font-size: 24px;
+            color: #333;
+        }
+        /* Sidebar styles */
+        .sidebar-menu {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .sidebar-menu-list {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+        }
+        .sidebar-menu-list li {
+            margin-bottom: 15px;
+        }
+        .sidebar-menu-list li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+        }
+        .close-sidebar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+        <img src="logo.png" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="cart.html"><i class="fa fa-shopping-cart"></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="login.html">Sign Up / Login</a></li>
+        </ul>
+    </div>
+</nav>
+    <!-- Sidebar Menu -->
+    <div id="sidebar-menu" class="sidebar-menu">
+        <button id="close-sidebar" class="close-sidebar">&times;</button>
+        <ul class="sidebar-menu-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="help.html">Help Centre</a></li>
+            <li><a href="authorize-center.html">Authorize Center</a></li>
+        </ul>
+    </div>
+
+    <!-- About Us Page Content -->
+    <div class="container mt-4">
+        <h1>About Us</h1>
+        <p>Welcome to JB Optician! We are dedicated to providing top-quality eyewear and exceptional customer service. Our team of experts is committed to ensuring that you find the perfect pair of glasses or contact lenses to suit your needs and style.</p>
+        <p>With years of experience in the optical industry, we pride ourselves on our extensive range of products and our ability to offer personalized solutions for every customer. Whether you’re looking for the latest fashion trends or require specialized optical products, JB Optician is here to help.</p>
+        <p>Thank you for choosing us for your optical needs. We look forward to serving you!</p>
+    </div>
+
+    <!-- Contact Us on WhatsApp -->
+    <a href="https://wa.me/yourwhatsappnumber" class="contact-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div>
+            <a href="https://www.instagram.com" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+            <p>All rights reserved &copy; 2024 JB Optician</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar-menu').style.display = 'block';
+        });
+
+        document.getElementById('close-sidebar').addEventListener('click', function() {
+            document.getElementById('sidebar-menu').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target !== document.getElementById('sidebar-menu') && event.target !== document.getElementById('menu-toggle')) {
+                document.getElementById('sidebar-menu').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

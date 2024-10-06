@@ -1,0 +1,392 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Align logo and text in the center */
+.brand-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+}
+
+/* Logo Styling */
+.navbar-brand img {
+    width: 100px;
+    margin-right: 10px;
+    /* Space between logo and text */
+}
+
+/* Center the website name with the logo */
+.website-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Profile Drop-down Styling */
+.profile {
+    position: relative;
+}
+
+/* Align Profile icon to the right */
+.profile-icon {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background-color: white;
+    color: black;
+    list-style-type: none;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f4f4f4;
+}
+
+/* Display the dropdown when profile is clicked */
+.profile:hover .dropdown-menu {
+    display: block;
+}
+
+
+/* Side Menu */
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 101;
+}
+
+.side-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-menu a:hover {
+    background-color: #575757;
+}
+
+.side-menu .close-btn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+}
+
+/* Navigation Bar */
+.navigation {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navigation ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.navigation ul li {
+    flex: 1;
+    text-align: center;
+}
+
+.navigation ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+/* Hero Section */
+.hero {
+    background: url('https://picsum.photos/1600/500') no-repeat center center/cover;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #ff7f50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+/* Featured Products */
+.products {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.products h2 {
+    margin-bottom: 40px;
+    font-size: 36px;
+}
+
+.product-list {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.product-item h3 {
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+
+/* "We Also Sell" Section */
+.we-also-sell {
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.we-also-sell h2 {
+    margin-bottom: 40px;
+    font-size: 36px;
+}
+
+.round-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.icon-item {
+    background-color: #f9f9f9;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.icon-item:hover {
+    transform: scale(1.1);
+}
+
+.icon-item img {
+    width: 50px;
+    height: 50px;
+}
+
+
+/* "Why Choose Us" Section */
+.why-choose-us {
+    background-color: #fff;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    margin-top: 20px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .product-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .products h2,
+    .we-also-sell h2 {
+        font-size: 28px;
+    }
+
+    .product-item {
+        width: 90%;
+    }
+
+    .features {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+.contact-btn {
+    position: fixed;
+    bottom: 75px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.contact-btn i {
+    margin: 0;
+}
+
+/* Profile Dropdown */
+.profile {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    padding: 10px 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.dropdown-menu.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-menu li {
+    padding: 12px 16px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f4f4f4;
+}
+
+.profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}

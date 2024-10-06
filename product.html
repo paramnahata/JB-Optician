@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <link rel="stylesheet" href="pstyles.css">
+</head>
+<body>
+<style>
+    /* Footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    margin-top: 20px;
+}
+
+.footer .social-icon {
+    margin: 0 10px;
+    font-size: 24px;
+    color: #ffffff;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .product-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .products h2,
+    .we-also-sell h2 {
+        font-size: 28px;
+    }
+
+    .product-item {
+        width: 90%;
+    }
+
+    .round-icons {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+</style>
+    <!-- Header with Search Bar -->
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">JB Opticals</a>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search for products...">
+            <button onclick="searchProducts()">Search</button>
+        </div>
+    </header>
+
+    <!-- Product Filters (Categories, Price, etc.) -->
+    <section class="filters">
+        <h3>Filters</h3>
+        <label for="price-range">Price Range:</label>
+        <select id="price-range" onchange="filterProducts()">
+            <option value="all">All</option>
+            <option value="low">Below $50</option>
+            <option value="mid">$50 - $100</option>
+            <option value="high">Above $100</option>
+        </select>
+    </section>
+
+    <!-- Product Listing -->
+    <section class="products">
+        <h2>Products</h2>
+        <div class="product-list" id="product-list">
+            <!-- JavaScript will generate the product items here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button onclick="prevPage()">-</button>
+            <span id="page-number">1</span>
+            <button onclick="nextPage()">+</button>
+        </div>
+    </section>
+ <!-- Footer -->
+ <footer class="footer">
+    <div>
+        <a href="https://www.instagram.com" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.youtube.com" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+        <p>All rights reserved &copy; 2024 JB Optician <a href="privacy policy.html">Privacy policy</a></li>
+        </p>
+    </div>
+</footer>
+
+<!-- Bottom Navigation for Mobile -->
+<nav class="navigation">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Shop</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
+    <script src="pscript.js"></script>
+</body>
+</html>
